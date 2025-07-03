@@ -51,6 +51,8 @@ public class RequestTranslationFilter implements GlobalFilter {
         // Simple check to see if the request has a content type and is a POST request
         if (exchange.getRequest().getHeaders().getContentType() == null || !exchange.getRequest().getMethod().equals(HttpMethod.POST)) {
             log.info("Request does not have a content type or is not a POST request");
+            log.info("http method: {}", exchange.getRequest().getMethod());
+            log.info("headers: {}", exchange.getRequest().getHeaders());
             finalResponse = exchange.getResponse().setComplete();
         } else {
             finalResponse= DataBufferUtils.join(exchange.getRequest().getBody())
