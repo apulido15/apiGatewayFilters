@@ -47,8 +47,6 @@ public class RequestTranslationFilter implements GlobalFilter {
             GatewayFilterChain chain) {
 
         exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
-        exchange.getResponse().getHeaders().add("Access-Control-Allow-Methods", "POST");
-        exchange.getResponse().getHeaders().add("Access-Control-Allow-Headers", "*");
         Mono<Void> finalResponse;
         // Simple check to see if the request has a content type and is a POST request
         if (exchange.getRequest().getHeaders().getContentType() == null || !exchange.getRequest().getMethod().equals(HttpMethod.POST)) {
