@@ -29,11 +29,11 @@ spring:
         - id: books-payments
           uri: https://books-payments-production.up.railway.app
           predicates:
-            - Path=/books-payments/**
+            - Path=/**
         - id: books-catalogue
           uri: https://books-catalogue-production.up.railway.app
           predicates:
-            - Path=/books-catalogue/**
+            - Path=/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors: ## CORS Configuration
