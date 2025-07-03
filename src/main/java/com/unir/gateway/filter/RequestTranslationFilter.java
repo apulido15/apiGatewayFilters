@@ -46,15 +46,16 @@ public class RequestTranslationFilter implements GlobalFilter {
             ServerWebExchange exchange,
             GatewayFilterChain chain) {
 
-        // By default, set the response status to 400. This will be overridden if the request is valid.
         exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
-
+        exchange.getResponse().getHeaders().add("Access-Control-Allow-Methods", "POST");
+        exchange.getResponse().getHeaders().add("Access-Control-Allow-Headers", "*");
+        Mono<Void> finalResponse;
         // Simple check to see if the request has a content type and is a POST request
         if (exchange.getRequest().getHeaders().getContentType() == null || !exchange.getRequest().getMethod().equals(HttpMethod.POST)) {
             log.info("Request does not have a content type or is not a POST request");
-            return exchange.getResponse().setComplete();
+            finalResponse = exchange.getResponse().setComplete();
         } else {
-            return DataBufferUtils.join(exchange.getRequest().getBody())
+            finalResponse= DataBufferUtils.join(exchange.getRequest().getBody())
                     .flatMap(dataBuffer -> {
                         GatewayRequest request = requestBodyExtractor.getRequest(exchange, dataBuffer);
                         ServerHttpRequest mutatedRequest = requestDecoratorFactory.getDecorator(request);
@@ -67,5 +68,6 @@ public class RequestTranslationFilter implements GlobalFilter {
                         return chain.filter(exchange.mutate().request(mutatedRequest).build());
                     });
         }
+        return finalResponse;
     }
 }
