@@ -27,11 +27,11 @@ spring:
 #          lower-case-service-id: true
       routes:
         - id: books-payments
-          uri: https://books-payments-production.up.railway.app
+          uri: lb://BOOKS-PAYMENTS
           predicates:
             - Path=/books-payments/**
         - id: books-catalogue
-          uri: https://books-catalogue-production.up.railway.app
+          uri: lb://BOOKS-CATALOGUE
           predicates:
             - Path=/books-catalogue/**
       default-filters:
