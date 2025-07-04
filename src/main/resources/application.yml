@@ -21,19 +21,19 @@ spring:
     name: gateway-acl
   cloud:
     gateway:
-#      discovery:
-#        locator:
-#          enabled: true
-#          lower-case-service-id: true
-      routes:
-        - id: books-payments
-          uri: https://books-payments-production.up.railway.app
-          predicates:
-            - Path=/**
-        - id: books-catalogue
-          uri: https://books-catalogue-production.up.railway.app
-          predicates:
-            - Path=/**
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+#      routes:
+#        - id: books-payments
+#          uri: https://books-payments-production.up.railway.app
+#          predicates:
+#            - Path=/books-payments/**
+#        - id: books-catalogue
+#          uri: https://books-catalogue-production.up.railway.app
+#          predicates:
+#            - Path=/books-catalogue/**
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors: ## CORS Configuration
